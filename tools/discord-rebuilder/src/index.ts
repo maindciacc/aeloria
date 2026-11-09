@@ -1577,7 +1577,10 @@ if (conversationModeEnabled || mentionChatEnabled || ambientTextEnabled) {
     const mention = new RegExp(`<@!?${client.user?.id ?? "0"}>`, "g");
     const addressedByMention = mentionChatEnabled && chatAllowed(message.channelId) && mention.test(message.content);
     const questionFromWakePhrase = wakeQuestion(message.content);
-    const addressedByWakePhrase = ambientTextEnabled && godMode && isOwnerId(message.author.id) && ambientChannelIds.has(message.channelId) && Boolean(questionFromWakePhrase);
+    const addressedByWakePhrase = Boolean(questionFromWakePhrase) && (
+      ambientTextEnabled && godMode && isOwnerId(message.author.id) && ambientChannelIds.has(message.channelId)
+      || isOwnerId(message.author.id)
+    );
     const bootstrapChannel = setupSettings.bootstrapChannelId === message.channelId;
     const addressedByConversation = conversationModeEnabled && (chatAllowed(message.channelId) || bootstrapChannel);
     if (!addressedByMention && !addressedByWakePhrase && !addressedByConversation) return;
