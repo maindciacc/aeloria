@@ -2,7 +2,9 @@
 
 > Many roots. One home.
 
-Aeloria is a story-led Minecraft Bedrock world and community project. The Discord is the gateway: it is where we find and organize the people who will build the world. The Minecraft server is the place their work becomes real.
+Aeloria is a story-led Minecraft Bedrock world and community project. The Discord server is called Aeloria and is the gateway where we find and organize the people who will build the lore world. The game server is called The Forgotten Ring, where their work becomes real.
+
+The central aim of this repository is to build that Discord recruitment hub: make it welcoming, explain how people can contribute, preserve the Aeloria lore, and help recruits move from interest to meaningful work on The Forgotten Ring.
 
 The project is built around a forgotten world, a drifting island, and a Promise no one can fully remember. Lore, architecture, server design, and community work should support one another without explaining away the mysteries.
 

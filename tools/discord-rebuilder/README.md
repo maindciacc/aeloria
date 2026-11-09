@@ -1,6 +1,6 @@
-# Aeloria Discord Rebuilder
+# Aeloria Discord Warden
 
-A small, self-hosted Discord bot that helps configure the Aeloria recruitment server from a checked-in manifest.
+Warden is the self-hosted assistant for the Aeloria Discord server. It is a chatbot, local project helper, Discord server builder/manager, and general-purpose jack-of-all-trades driven by a checked-in manifest. The Discord community is Aeloria; the game server is The Forgotten Ring; Aeloria is the lore/world identity.
 
 ## Safety by design
 
