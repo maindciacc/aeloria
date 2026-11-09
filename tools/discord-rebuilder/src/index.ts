@@ -555,7 +555,15 @@ async function monitorGameServer(guild: Guild): Promise<void> {
 }
 
 function welcomeChannel(guild: Guild): import("discord.js").TextChannel | undefined {
-  const channel = [...guild.channels.cache.values()].find((item) => item.type === ChannelType.GuildText && normalize(item.name) === normalize(setupSettings.welcomeChannelName));
+  const configured = [...guild.channels.cache.values()].find((item) => item.type === ChannelType.GuildText && normalize(item.name) === normalize(setupSettings.welcomeChannelName));
+  if (configured?.type === ChannelType.GuildText && configured.id !== setupSettings.communicationHubChannelId) return configured;
+  const welcomeEntry = manifest.categories
+    .map((category) => ({ category, channel: category.channels.find((channel) => channel.type === "text" && normalize(channel.name).includes("welcome")) }))
+    .find((entry) => Boolean(entry.channel));
+  const manifestChannel = welcomeEntry?.channel
+    ? [...guild.channels.cache.values()].find((item) => item.type === ChannelType.GuildText && item.parentId && normalize(item.name) === normalize(welcomeEntry.channel!.name) && [...guild.channels.cache.values()].some((parent) => parent.id === item.parentId && normalize(parent.name) === normalize(welcomeEntry.category.name)))
+    : undefined;
+  const channel = manifestChannel ?? configured;
   return channel?.type === ChannelType.GuildText ? channel : undefined;
 }
 

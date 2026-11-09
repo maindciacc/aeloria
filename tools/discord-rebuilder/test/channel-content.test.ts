@@ -14,6 +14,14 @@ test("every manifest channel has a description", () => {
   }
 });
 
+test("welcome starter content is explicitly configured for the Gateway welcome channel", () => {
+  const manifest = JSON.parse(readFileSync(new URL("../config/aeloria-server.json", import.meta.url), "utf8")) as { categories: Array<{ name: string; channels: Array<{ name: string; starterMessage?: string }> }> };
+  const gateway = manifest.categories.find((category) => category.name === "The Gateway");
+  const welcome = gateway?.channels.find((channel) => channel.name === "👋・welcome");
+  assert.ok(welcome);
+  assert.match(welcome.starterMessage ?? "", /Welcome to Aeloria/);
+});
+
 test("starter content has a stable marker and can be recognized on retry", () => {
   const channel = { name: "welcome", type: "text" as const, topic: "Welcome contributors." };
   const content = starterMessage("The Gateway", channel);

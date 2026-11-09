@@ -10,6 +10,7 @@ export type RoleSpec = {
   autoAssign?: boolean;
   legacyNames?: string[];
   reactionEmoji?: string;
+  permissions?: string[];
 };
 
 export function normalizeRoleName(value: string): string {
@@ -48,6 +49,7 @@ export function validateRoleManifest(roles: readonly RoleSpec[]): string[] {
       else reactionEmojis.add(emoji);
     }
     if (role.color && !/^#[0-9a-f]{6}$/i.test(role.color)) errors.push(`Invalid role color: ${role.name}`);
+    if (role.permissions?.some((permission) => permission === "Administrator" || permission === "ADMINISTRATOR")) errors.push(`Administrator permission is not allowed in the role manifest: ${role.name}`);
   }
   for (const role of roles) {
     if (role.kind === "self-selectable" && role.group && !groups.has(role.group)) {

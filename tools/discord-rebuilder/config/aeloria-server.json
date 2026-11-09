@@ -1,9 +1,9 @@
 {
   "roles": [
     { "name": "━━ STAFF & LEADERSHIP ━━", "kind": "separator", "group": "staff", "color": "#5865f2", "hoist": true, "autoAssign": true },
-    { "name": "Founder", "kind": "staff", "group": "staff", "color": "#7b4ab5", "hoist": true },
-    { "name": "Project Lead", "kind": "staff", "group": "staff", "color": "#c98b37", "hoist": true },
-    { "name": "Moderator", "kind": "staff", "group": "staff", "color": "#d85c62", "hoist": true },
+    { "name": "Founder", "kind": "staff", "group": "staff", "color": "#7b4ab5", "hoist": true, "permissions": ["ViewChannel", "SendMessages", "ReadMessageHistory", "ManageMessages", "ManageThreads", "EmbedLinks", "AttachFiles", "AddReactions", "UseApplicationCommands"] },
+    { "name": "Project Lead", "kind": "staff", "group": "staff", "color": "#c98b37", "hoist": true, "permissions": ["ViewChannel", "SendMessages", "ReadMessageHistory", "ManageMessages", "ManageThreads", "EmbedLinks", "AttachFiles", "AddReactions", "UseApplicationCommands"] },
+    { "name": "Moderator", "kind": "staff", "group": "staff", "color": "#d85c62", "hoist": true, "permissions": ["ViewChannel", "SendMessages", "ReadMessageHistory", "ManageMessages", "ManageThreads", "EmbedLinks", "AddReactions", "UseApplicationCommands"] },
     { "name": "━━ CONTRIBUTOR PATHS ━━", "kind": "separator", "group": "contributors", "color": "#5865f2", "hoist": true, "autoAssign": true },
     { "name": "Builder", "kind": "self-selectable", "group": "contributors", "selfAssignable": true, "reactionEmoji": "🧱", "color": "#40a878", "hoist": false },
     { "name": "Lore Writer", "kind": "self-selectable", "group": "contributors", "selfAssignable": true, "reactionEmoji": "📜", "color": "#8c67bd", "hoist": false },

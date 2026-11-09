@@ -8,6 +8,7 @@ import {
   type GuildBasedChannel,
   type Role,
   type TextChannel,
+  type PermissionResolvable,
 } from "discord.js";
 import { roleNamesMatch, separatorRoles, selfAssignableRoles, type RoleSpec } from "./role-policy.js";
 
@@ -42,7 +43,7 @@ export function rolePreviewLines(guild: Guild, manifest: RoleManifest): string[]
   const lines = ["Role manifest preview:"];
   for (const spec of manifest.roles) {
     const existing = findRole(guild, spec);
-    const flags = [spec.kind ?? "member", spec.group ? `group:${spec.group}` : "", spec.selfAssignable ? "self-selectable" : "", spec.autoAssign ? "auto-assign" : ""].filter(Boolean).join(", ");
+    const flags = [spec.kind ?? "member", spec.group ? `group:${spec.group}` : "", spec.selfAssignable ? "self-selectable" : "", spec.autoAssign ? "auto-assign" : "", spec.color ? `color:${spec.color}` : "", spec.permissions?.length ? `permissions:${spec.permissions.join(",")}` : "permissions:none"].filter(Boolean).join(", ");
     lines.push(`${existing ? "✓ exists" : "+ create"}: ${spec.name} [${flags}]`);
   }
   lines.push(`Self-selectable roles: ${selfAssignableRoles(manifest.roles).length}`);
@@ -56,8 +57,8 @@ export async function applyRoleManifest(guild: Guild, manifest: RoleManifest): P
   for (const spec of manifest.roles) {
     const existing = findRole(guild, spec);
     if (existing) {
-      if (!existing.managed && spec.color) {
-        await existing.edit({ color: spec.color as ColorResolvable, hoist: spec.hoist ?? false, reason: "Aeloria role manifest: reconcile role" });
+      if (!existing.managed) {
+        await existing.edit({ color: (spec.color ?? "#99a4ad") as ColorResolvable, hoist: spec.hoist ?? false, permissions: (spec.permissions ?? []) as PermissionResolvable[], reason: "Aeloria role manifest: reconcile role" });
       }
       results.push(`✓ role ready: ${spec.name}`);
       continue;
@@ -67,7 +68,7 @@ export async function applyRoleManifest(guild: Guild, manifest: RoleManifest): P
       color: (spec.color ?? "#99a4ad") as ColorResolvable,
       hoist: spec.hoist ?? false,
       mentionable: false,
-      permissions: [],
+      permissions: (spec.permissions ?? []) as PermissionResolvable[],
       reason: "Aeloria role manifest: create role",
     });
     results.push(`+ created role: ${role.name}`);

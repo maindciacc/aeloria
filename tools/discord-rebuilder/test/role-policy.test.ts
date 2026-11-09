@@ -13,6 +13,15 @@ test("role manifest separates safe self-selectable roles from staff roles", () =
   assert.equal(selfAssignableRoles(roles).length, 1);
 });
 
+test("administrator is rejected while bounded staff permissions are accepted", () => {
+  const errors = validateRoleManifest([
+    { name: "Founder", kind: "staff", permissions: ["ViewChannel", "ManageMessages"] },
+    { name: "Unsafe", kind: "staff", permissions: ["Administrator"] },
+  ]);
+  assert.equal(errors.some((error) => error.includes("Administrator permission is not allowed")), true);
+  assert.equal(errors.some((error) => error.includes("Founder")), false);
+});
+
 test("reaction emoji mappings are unique and limited to self-selectable roles", () => {
   const errors = validateRoleManifest([
     { name: "━━ CONTRIBUTORS ━━", kind: "separator", group: "contributors", autoAssign: true },
