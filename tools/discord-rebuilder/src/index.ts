@@ -72,9 +72,13 @@ async function protectCommunicationHub(guild: Guild): Promise<void> {
   if (!hub || !client.user) return;
   const policy = hubPermissionPolicy(guild.id, ownerIds, client.user.id);
   try {
+    const allowedUsers = (await Promise.all(policy.allowedUserIds.map(async (id) => {
+      if (id === client.user?.id) return client.user;
+      return guild.members.fetch(id).then((member) => member.user).catch(() => undefined);
+    }))).filter((user): user is NonNullable<typeof user> => Boolean(user));
     await hub.permissionOverwrites.set([
       {
-        id: policy.everyoneId,
+        id: guild.roles.everyone,
         deny: [
           PermissionFlagsBits.ViewChannel,
           PermissionFlagsBits.SendMessages,
@@ -83,7 +87,7 @@ async function protectCommunicationHub(guild: Guild): Promise<void> {
           PermissionFlagsBits.ManageWebhooks,
         ],
       },
-      ...policy.allowedUserIds.map((id) => ({ id, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] })),
+      ...allowedUsers.map((user) => ({ id: user.id, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] })),
     ], "Warden communication hub: owner and bot only");
   } catch (error) {
     console.error(`Unable to lock communication hub #${hub.name}:`, error);
