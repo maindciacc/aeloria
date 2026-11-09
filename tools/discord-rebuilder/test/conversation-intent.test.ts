@@ -9,6 +9,14 @@ test("conversation intent recognizes common operational language", () => {
   assert.deepEqual(conversationIntent("what is the server status?"), { kind: "status" });
 });
 
+test("conversation intent recognizes staged rollout controls", () => {
+  assert.deepEqual(conversationIntent("rollout plan"), { kind: "rollout-plan" });
+  assert.deepEqual(conversationIntent("rollout tweak welcome off"), { kind: "rollout-tweak", request: "rollout tweak welcome off" });
+  assert.deepEqual(conversationIntent("approve rollout"), { kind: "rollout-approve" });
+  assert.deepEqual(conversationIntent("run next rollout stage"), { kind: "rollout-next" });
+  assert.deepEqual(conversationIntent("rollout cancel"), { kind: "rollout-cancel" });
+});
+
 test("ambiguous conversation remains chat", () => {
   assert.deepEqual(conversationIntent("I have an idea for the guilds"), { kind: "chat", question: "I have an idea for the guilds" });
 });

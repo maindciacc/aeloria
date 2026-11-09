@@ -33,7 +33,7 @@ import { deletionProposalValid, isDeletionCancellation, isDeletionConfirmation, 
 import { recordLoreApproval, writeLoreDraft } from "./lore-workflow.js";
 import { createDashboardServer, dashboardConfig } from "./dashboard.js";
 import { canAcceptRules, canRunSafetyWorkflow, createSmokeTestPlan, isBotAccount, LOCKDOWN_CATEGORY_NAME, LOCKDOWN_HOLDING_CHANNEL_NAME, LOCKDOWN_NOTICEBOARD_CHANNEL_NAME, LOCKDOWN_ROLE_NAME, LOCKDOWN_STAFF_CHANNEL_NAME, LOCKDOWN_STAFF_ROLE_NAMES, SMOKE_TEST_MARKER } from "./safety-workflows.js";
-import { formatRolloutResults, runRollout } from "./rollout.js";
+import { advanceStagedRollout, applyRolloutTweak, approveStagedRollout, describeStagedRollout, formatRolloutResults, nextRolloutStage, runRollout, runRolloutStage, type StagedRolloutSession } from "./rollout.js";
 import { conversationIntent, explicitCancellation, explicitConfirmation, type ConversationIntent } from "./conversation-intent.js";
 import { DEFAULT_SETUP_SETTINGS, loadSetupSettings, mergeSetupSettings, saveSetupSettings, setupSettingsHelp, type SetupSettings } from "./setup-settings.js";
 import { bootstrapChannelId, bootstrapWelcomeMessage, isFirstRunBlankGuild } from "./bootstrap.js";
@@ -65,6 +65,30 @@ type Manifest = {
 const requiredEnv = ["DISCORD_TOKEN", "APPLICATION_ID", "GUILD_ID", "OPERATOR_IDS"] as const;
 for (const key of requiredEnv) {
   if (!process.env[key]) throw new Error(`Missing ${key}; copy .env.example to .env and fill it in.`);
+}
+
+function rolloutRunner(guild: Guild, tweaks: StagedRolloutSession["tweaks"]) {
+  return async (stage: import("./rollout.js").RolloutStage): Promise<string[]> => {
+    if (stage === "structure") return applyManifest(guild, false);
+    if (stage === "roles") return applyRoleManifest(guild, manifest);
+    if (stage === "content") {
+      const lines = await channelContentLines(guild, manifest, true);
+      if (tweaks.postWelcomePackage === false) return lines.filter((line) => !line.includes("👋・welcome"));
+      return lines;
+    }
+    if (stage === "role-panel") return [await publishRolePanel(guild, manifest, roleMenuChannelId, client.user?.id)];
+    if (tweaks.autoRoleSeparators === false) return ["Separator assignment disabled for this staged rollout; onboarding roles remain available for rules acceptance."];
+    return assignSeparatorRoles(guild, manifest);
+  };
+}
+
+async function runNextRolloutStage(guild: Guild, session: StagedRolloutSession): Promise<string[]> {
+  const stage = nextRolloutStage(session);
+  if (!stage) return ["The staged rollout is already complete."];
+  if (!session.approved) return [`The next stage is **${stage}**, but it is not approved. Say **approve rollout** first.`];
+  const result = await runRolloutStage(stage, rolloutRunner(guild, session.tweaks));
+  if (result.ok) advanceStagedRollout(session);
+  return [`**Staged rollout — ${stage}**`, result.ok ? "✓ stage complete" : "✗ stage failed", ...result.lines, ...describeStagedRollout(session)];
 }
 
 async function protectCommunicationHub(guild: Guild): Promise<void> {
@@ -320,6 +344,7 @@ let pendingReset: { code: string; expiresAt: number; resourceIds: string[] } | u
 let pendingConversationDeletion: ConversationDeletionProposal | undefined;
 type PendingConversationAction = Extract<ConversationIntent, { kind: "rollout-request" | "lockdown-request" | "smoke-run" | "smoke-cleanup" }>;
 let pendingConversationAction: { ownerId: string; guildId: string; channelId: string; intent: PendingConversationAction; expiresAt: number } | undefined;
+let stagedRollout: StagedRolloutSession | undefined;
 let lockdownEnabled = false;
 const smokeTestMessages = new Set<string>();
 const mentionChatEnabled = process.env.ENABLE_MENTION_CHAT !== "false";
@@ -1659,6 +1684,41 @@ if (conversationModeEnabled || mentionChatEnabled || ambientTextEnabled) {
         return;
       }
     }
+    const intent = conversationIntent(question);
+    if (intent.kind === "rollout-plan") {
+      if (!stagedRollout || stagedRollout.expiresAt <= Date.now() || stagedRollout.guildId !== message.guildId || stagedRollout.channelId !== message.channelId) {
+        stagedRollout = { ownerId: message.author.id, guildId: message.guildId, channelId: message.channelId, nextStageIndex: 0, approved: false, tweaks: {}, expiresAt: Date.now() + 15 * 60 * 1000 };
+      }
+      await message.reply(["**Aeloria conversational rollout plan**", ...describeStagedRollout(stagedRollout), "Available: **rollout tweak welcome off**, **rollout tweak separators off**, **approve rollout**, **run next rollout stage**, **rollout cancel**."].join("\n"));
+      return;
+    }
+    if (intent.kind === "rollout-tweak" || intent.kind === "rollout-approve" || intent.kind === "rollout-next" || intent.kind === "rollout-cancel") {
+      if (!isOwnerId(message.author.id)) {
+        await message.reply("I can discuss the staged rollout, but only the configured owner can tweak, approve, run, or cancel stages.");
+        return;
+      }
+      if (!stagedRollout || stagedRollout.expiresAt <= Date.now() || stagedRollout.guildId !== message.guildId || stagedRollout.channelId !== message.channelId || stagedRollout.ownerId !== message.author.id) {
+        await message.reply("There is no active staged rollout in this channel. Say **rollout plan** first.");
+        return;
+      }
+      stagedRollout.expiresAt = Date.now() + 15 * 60 * 1000;
+      if (intent.kind === "rollout-cancel") {
+        stagedRollout = undefined;
+        await message.reply("Cancelled the staged rollout. No stage was changed by this cancellation.");
+        return;
+      }
+      if (intent.kind === "rollout-tweak") {
+        const change = applyRolloutTweak(stagedRollout, intent.request);
+        await message.reply(change ? [`Updated staged rollout: **${change}**.`, ...describeStagedRollout(stagedRollout)].join("\n") : "I can only tweak **welcome package** or **separator assignment** in chat. Try `rollout tweak welcome off`.");
+        return;
+      }
+      if (intent.kind === "rollout-approve") {
+        await message.reply(approveStagedRollout(stagedRollout));
+        return;
+      }
+      await message.reply((await runNextRolloutStage(message.guild, stagedRollout)).join("\n").slice(0, 1900));
+      return;
+    }
     if (isOwnerId(message.author.id) && deletionProposalValid(pendingConversationDeletion, message.author.id, message.guildId, message.channelId)) {
       if (isDeletionCancellation(question)) {
         pendingConversationDeletion = undefined;
@@ -1696,7 +1756,6 @@ if (conversationModeEnabled || mentionChatEnabled || ambientTextEnabled) {
       await message.reply("I can only propose deletion when you name existing manifest-managed channels, categories, or roles. Nothing was changed.");
       return;
     }
-    const intent = conversationIntent(question);
     if (intent.kind === "rollout-preview") {
       await message.reply((await rollout(message.guild, false)).join("\n").slice(0, 1900));
       return;
