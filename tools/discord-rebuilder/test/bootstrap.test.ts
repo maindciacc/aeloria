@@ -12,4 +12,5 @@ test("bootstrap state keeps an existing binding and has an actionable welcome", 
   assert.equal(bootstrapChannelId(undefined, "channel"), "channel");
   assert.equal(bootstrapChannelId("existing", "channel"), "existing");
   assert.match(bootstrapWelcomeMessage(), /blank slate/);
+  assert.equal(bootstrapWelcomeMessage().includes("<!--"), false);
 });

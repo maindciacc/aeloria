@@ -18,7 +18,6 @@ export function bootstrapChannelId(current: string | undefined, channelId: strin
 
 export function bootstrapWelcomeMessage(): string {
   return [
-    "<!-- aeloria-warden-bootstrap:v1 -->",
     "**Warden is here. This guild is currently a blank slate.**",
     "",
     "I can build Aeloria from the checked-in manifest: roles, categories, channels, tailored welcome posts, reaction roles, onboarding, and a setup conversation.",

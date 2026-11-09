@@ -50,7 +50,8 @@ export async function channelContentLines(guild: Guild, manifest: ContentManifes
         lines.push(`! cannot inspect message history: ${category.name}/#${spec.name}`);
         continue;
       }
-      const hasStarter = [...messages.values()].some((message) => isManagedStarterMessage(message.content, category.name, spec.name));
+      const expectedStarter = starterMessage(category.name, spec);
+      const hasStarter = [...messages.values()].some((message) => isManagedStarterMessage(message.content, category.name, spec.name, expectedStarter));
       const currentTopic = "topic" in channel && typeof channel.topic === "string" ? channel.topic : undefined;
       const topicNeedsUpdate = currentTopic !== description && "setTopic" in channel && typeof channel.setTopic === "function";
       if (!apply) {

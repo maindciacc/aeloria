@@ -109,7 +109,7 @@ async function initializeFirstRunBootstrap(guild: Guild): Promise<boolean> {
   setupSettings = mergeSetupSettings(setupSettings, { bootstrapChannelId: bootstrapChannelId(setupSettings.bootstrapChannelId, channel.id), communicationHubChannelId: channel.id, welcomeChannelName: channel.name, autoSetupOnReady: false });
   await saveSetupSettings(local.workspacePath, setupSettings);
   const messages = await channel.messages.fetch({ limit: 50 });
-  if (![...messages.values()].some((message) => message.author.id === client.user?.id && message.content.includes("<!-- aeloria-warden-bootstrap:v1 -->"))) {
+  if (![...messages.values()].some((message) => message.author.id === client.user?.id && (message.content.includes("<!-- aeloria-warden-bootstrap:v1 -->") || message.content.includes("**Warden is here. This guild is currently a blank slate.**")))) {
     await channel.send(bootstrapWelcomeMessage());
   }
     if (guild) {
@@ -572,11 +572,10 @@ async function postWelcomePackage(guild: Guild, lines: string[]): Promise<string
   const channel = welcomeChannel(guild);
   if (!channel) return [`Welcome channel not found: ${setupSettings.welcomeChannelName}`];
   const existing = await channel.messages.fetch({ limit: 50 });
-  if ([...existing.values()].some((message) => message.author.id === client.user?.id && message.content.includes("<!-- aeloria-warden-welcome-package:v1 -->"))) {
+  if ([...existing.values()].some((message) => message.author.id === client.user?.id && (message.content.includes("<!-- aeloria-warden-welcome-package:v1 -->") || message.content.includes("**Welcome to Aeloria — The Forgotten Ring**")))) {
     return [`Welcome package already exists in #${channel.name}; skipped duplicate post.`];
   }
   await channel.send([
-    "<!-- aeloria-warden-welcome-package:v1 -->",
     "**Welcome to Aeloria — The Forgotten Ring**",
     "Warden is online. Start with 📜・rules, accept them there, then use 🎭・choose-your-roles to choose your contribution paths.",
     "This setup is manifest-driven and safe to rerun. Discuss changes with Warden here; destructive actions always require explicit owner confirmation.",

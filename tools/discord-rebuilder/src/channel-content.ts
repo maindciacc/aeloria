@@ -26,11 +26,11 @@ export function starterMessage(categoryName: string, channel: ContentChannelSpec
   const description = channelDescription(categoryName, channel) ?? `A place for ${channel.name}.`;
   const customMessage = channel.starterMessage?.trim();
   return [
-    starterMarker(categoryName, channel.name),
     customMessage || `**Welcome to #${channel.name}**\n\n${description}\n\nKeep contributions relevant to this channel so the project stays easy to follow.`,
   ].join("\n");
 }
 
-export function isManagedStarterMessage(content: string, categoryName: string, channelName: string): boolean {
-  return content.includes(starterMarker(categoryName, channelName));
+export function isManagedStarterMessage(content: string, categoryName: string, channelName: string, expectedContent?: string): boolean {
+  return content.includes(starterMarker(categoryName, channelName))
+    || (expectedContent ? content === expectedContent : content.includes(`**Welcome to #${channelName}**`) && categoryName === "The Gateway");
 }

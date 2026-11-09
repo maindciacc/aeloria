@@ -26,8 +26,10 @@ test("starter content has a stable marker and can be recognized on retry", () =>
   const channel = { name: "welcome", type: "text" as const, topic: "Welcome contributors." };
   const content = starterMessage("The Gateway", channel);
   assert.match(content, /Welcome to #welcome/);
+  assert.equal(content.includes("<!--"), false);
   assert.match(content, /Welcome contributors\./);
   assert.equal(isManagedStarterMessage(content, "The Gateway", "welcome"), true);
+  assert.equal(isManagedStarterMessage("<!-- aeloria-warden-starter:v1:the gateway:welcome -->\nlegacy", "The Gateway", "welcome"), true);
   assert.equal(isManagedStarterMessage(content, "Other", "welcome"), false);
-  assert.equal(content.includes(starterMarker("The Gateway", "welcome")), true);
+  assert.equal(starterMarker("The Gateway", "welcome").startsWith("<!--"), true);
 });
