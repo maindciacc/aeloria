@@ -9,3 +9,7 @@ test("setup settings accept only known bounded values", () => {
 test("setup settings merge with safe defaults", () => {
   assert.deepEqual(mergeSetupSettings(DEFAULT_SETUP_SETTINGS, { postWelcomePackage: false }), { ...DEFAULT_SETUP_SETTINGS, postWelcomePackage: false });
 });
+
+test("startup setup is read-only by default", () => {
+  assert.equal(DEFAULT_SETUP_SETTINGS.autoSetupOnReady, false);
+});

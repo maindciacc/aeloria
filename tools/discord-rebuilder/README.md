@@ -8,8 +8,8 @@ Warden is the self-hosted assistant for the Aeloria Discord server. It is a chat
 - `/aeloria setup preview` is read-only and shows what would be created.
 - `/aeloria setup apply` creates only missing roles, categories, and channels from the manifest.
 - `/aeloria setup reconcile` updates matching manifest roles, private permissions, channel parents, and text topics, while creating missing resources.
-- `/aeloria rollout preview|execute` is the owner-only full deployment workflow for a freshly emptied server. Execute runs structure, roles, tailored channel content, the reaction/button role panel, and onboarding assignment in that order. It never wipes the server; perform any clean-slate wipe separately and review the stage report.
-- When Warden rejoins, it loads `.warden-workspace/setup-settings.json`. With `autoSetupOnReady=true` (default), it reruns the idempotent setup and posts one managed welcome package to `welcomeChannelName` if one is not already present.
+- `/aeloria rollout preview` is read-only. Full rollout execution is disabled; use the conversational staged workflow instead: `rollout plan`, discuss/tweak, `approve rollout`, then `run next rollout stage`.
+- When Warden rejoins, startup is strictly read-only. It initializes local services and registers commands but does not create roles/channels, change permissions, or post welcome/setup content.
 - On a true first join to a blank guild—one text channel, no categories, no human-created roles, and only Warden's managed role—Warden does **not** immediately build. It claims the sole channel as a temporary setup room, persists its ID, posts a bootstrap guide, and waits for the owner to discuss or confirm setup. `CHAT_CHANNEL_IDS` is not required for this first-run room.
 - After the owner confirms the first setup, Warden promotes that original channel to the manifest `👋・welcome` channel, creates the remaining structure, publishes the welcome package and role panel, and marks future reconnects as safe to rerun.
 - The original first-run channel is also persisted as the communication hub by channel ID. Renaming it or changing its topic does not move Warden's setup conversation or alerts to another channel.
@@ -82,7 +82,7 @@ After intentionally emptying the configured Aeloria server:
 2. Ensure the bot has `Manage Channels`, `Manage Roles`, `View Channels`, `Send Messages`, `Read Message History`, `Add Reactions`, and the required privileged intents enabled in the Discord Developer Portal. Do not grant Administrator.
 3. Start Warden with `npm start` from `tools/discord-rebuilder`.
 4. Run `/aeloria rollout preview` and inspect the planned manifest resources.
-5. Run `/aeloria rollout execute` as the configured owner.
+5. In the Warden conversation channel, say `rollout plan`, discuss any changes, then approve and run each stage individually.
 6. Run `/aeloria analyze`, `/aeloria content preview`, and `/aeloria roles preview` to verify visible drift.
 7. If the report stops at a stage, correct the reported permission or hierarchy issue and execute rollout again. The stages are idempotent and do not delete unrelated resources.
 

@@ -14,7 +14,7 @@ export type SetupSettings = {
 };
 
 export const DEFAULT_SETUP_SETTINGS: SetupSettings = {
-  autoSetupOnReady: true,
+  autoSetupOnReady: false,
   postWelcomePackage: true,
   welcomeChannelName: "👋・welcome",
   setupConversationEnabled: true,

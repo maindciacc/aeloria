@@ -611,23 +611,11 @@ async function postWelcomePackage(guild: Guild, lines: string[]): Promise<string
 }
 
 async function runWelcomeSetup(guild: Guild): Promise<string[]> {
-  if (setupSettings.bootstrapChannelId) {
-    const bootstrap = guild.channels.cache.get(setupSettings.bootstrapChannelId);
-    const welcomeSpec = manifest.categories.flatMap((category) => category.channels).find((channel) => channel.name.includes("welcome") && channel.type === "text");
-    if (bootstrap?.type === ChannelType.GuildText && welcomeSpec) {
-      if (!isCommunicationHub(bootstrap.id, setupSettings.communicationHubChannelId)) {
-        await bootstrap.edit({ name: welcomeSpec.name, topic: welcomeSpec.topic, reason: "Aeloria first-run bootstrap: promote setup channel to welcome channel" });
-        setupSettings = mergeSetupSettings(setupSettings, { welcomeChannelName: welcomeSpec.name });
-        await saveSetupSettings(local.workspacePath, setupSettings);
-      }
-    }
-  }
-  await protectCommunicationHub(guild);
-  const lines = await rollout(guild, true);
-  const welcomeLines = await postWelcomePackage(guild, lines);
-  setupSettings = mergeSetupSettings(setupSettings, { autoSetupOnReady: true });
-  await saveSetupSettings(local.workspacePath, setupSettings);
-  return [...lines, ...welcomeLines, "First-run bootstrap is complete; future reconnects may safely rerun idempotent setup."];
+  return [
+    "Automatic and legacy full rollout are disabled.",
+    "No Discord changes were made.",
+    "Start the conversational workflow with **rollout plan**, discuss the stages, then approve and run them one at a time.",
+  ];
 }
 
 function setupUpdateFromText(text: string): Partial<SetupSettings> {
@@ -1069,16 +1057,7 @@ client.once("ready", async (readyClient) => {
     console.log(`Local Warden services ready: vault=${services.vaultInitialized ? "initialized" : "skipped"}, context=${services.contextCharacters} chars, obsidian=${services.obsidianOpened ? "opened" : "not opened"}.`);
     if (services.ollama) console.log(`Ollama startup check: ${services.ollama.detail}.`);
     const guild = client.guilds.cache.get(guildId);
-    const firstRun = guild ? await initializeFirstRunBootstrap(guild) : false;
-    if (guild) await protectCommunicationHub(guild);
-    if (guild && setupSettings.autoSetupOnReady && !firstRun) {
-      try {
-        const setupLines = await runWelcomeSetup(guild);
-        console.log(setupLines.join("\n"));
-      } catch (error) {
-        console.error("Automatic Warden welcome setup failed:", error);
-      }
-    }
+    if (guild) console.log("Startup is read-only: no Discord rollout, welcome post, role, channel, or permission changes will run automatically.");
     if (dashboard.enabled) {
       const liveStatus = async () => {
         const guild = client.guilds.cache.get(guildId);
@@ -1121,7 +1100,7 @@ client.once("ready", async (readyClient) => {
           if (!guild) return [`Configured guild ${guildId} is not cached.`];
           if (cancellation) return ["Cancelled. Nothing was changed."];
           if (/\b(help|settings|configure|configuration|setup options)\b/i.test(question)) return setupSettingsHelp();
-          if (confirmation && /\b(setup|deploy|welcome|rollout)\b/i.test(question)) return runWelcomeSetup(guild);
+          if (confirmation && /\b(setup|deploy|welcome|rollout)\b/i.test(question)) return ["Full rollout execution is disabled here. Use **rollout plan** and approve each stage after discussion."];
           const update = setupUpdateFromText(question);
           if (Object.keys(update).length > 0) return ["Proposed setup settings change:", JSON.stringify(update), "Send the same request with dashboard confirmation to apply it."];
           if (/\b(preview|plan|status)\b/i.test(question)) return rollout(guild, false);
@@ -1279,13 +1258,7 @@ client.on("interactionCreate", async (interaction) => {
       await interaction.reply({ content: (await rollout(interaction.guild, false)).join("\n").slice(0, 1900), ephemeral: true });
       return;
     }
-    await interaction.deferReply({ ephemeral: true });
-    try {
-      await interaction.editReply((await rollout(interaction.guild, true)).join("\n").slice(0, 1900));
-    } catch (error) {
-      console.error("Aeloria full rollout failed:", error);
-      await interaction.editReply("Full rollout failed. Review the stage report and Discord permissions before retrying; no wipe was performed.");
-    }
+    await interaction.reply({ content: "Full rollout execution is disabled. Use **rollout plan** in the configured Warden conversation channel, discuss the stages, and run them individually after approval.", ephemeral: true });
     return;
   }
   if (subcommand === "god") {
@@ -1667,7 +1640,7 @@ if (conversationModeEnabled || mentionChatEnabled || ambientTextEnabled) {
         pendingConversationAction = undefined;
         try {
           const result = pending.intent.kind === "rollout-request"
-            ? await runWelcomeSetup(message.guild)
+            ? ["Full rollout execution is disabled here. Use **rollout plan** and approve each stage after discussion."]
             : pending.intent.kind === "lockdown-request"
               ? await runLockdownAction(message.guild, pending.intent.enabled ? "enable" : "disable")
               : await runSmokeTest(message.guild, pending.intent.kind === "smoke-run" ? "run" : "cleanup");
