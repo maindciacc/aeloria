@@ -1,118 +1,544 @@
 {
   "roles": [
-    { "name": "━━ STAFF & LEADERSHIP ━━", "kind": "separator", "group": "staff", "color": "#5865f2", "hoist": true, "autoAssign": true },
-    { "name": "Founder", "kind": "staff", "group": "staff", "color": "#7b4ab5", "hoist": true, "permissions": ["ViewChannel", "SendMessages", "ReadMessageHistory", "ManageMessages", "ManageThreads", "EmbedLinks", "AttachFiles", "AddReactions", "UseApplicationCommands"] },
-    { "name": "Project Lead", "kind": "staff", "group": "staff", "color": "#c98b37", "hoist": true, "permissions": ["ViewChannel", "SendMessages", "ReadMessageHistory", "ManageMessages", "ManageThreads", "EmbedLinks", "AttachFiles", "AddReactions", "UseApplicationCommands"] },
-    { "name": "Moderator", "kind": "staff", "group": "staff", "color": "#d85c62", "hoist": true, "permissions": ["ViewChannel", "SendMessages", "ReadMessageHistory", "ManageMessages", "ManageThreads", "EmbedLinks", "AddReactions", "UseApplicationCommands"] },
-    { "name": "━━ CONTRIBUTOR PATHS ━━", "kind": "separator", "group": "contributors", "color": "#5865f2", "hoist": true, "autoAssign": true },
-    { "name": "Builder", "kind": "self-selectable", "group": "contributors", "selfAssignable": true, "reactionEmoji": "🧱", "color": "#40a878", "hoist": false },
-    { "name": "Lore Writer", "kind": "self-selectable", "group": "contributors", "selfAssignable": true, "reactionEmoji": "📜", "color": "#8c67bd", "hoist": false },
-    { "name": "Artist", "kind": "self-selectable", "group": "contributors", "selfAssignable": true, "reactionEmoji": "🎨", "color": "#df76ac", "hoist": false },
-    { "name": "World Designer", "kind": "self-selectable", "group": "contributors", "selfAssignable": true, "reactionEmoji": "🗺️", "color": "#42a8c6", "hoist": false },
-    { "name": "Server Tester", "kind": "self-selectable", "group": "contributors", "selfAssignable": true, "reactionEmoji": "🧪", "color": "#d19b49", "hoist": false },
-    { "name": "Community Helper", "kind": "self-selectable", "group": "contributors", "selfAssignable": true, "reactionEmoji": "🤝", "color": "#5caa8c", "hoist": false },
-    { "name": "━━ COMMUNITY ━━", "kind": "separator", "group": "community", "color": "#5865f2", "hoist": true, "autoAssign": true },
-    { "name": "Member", "kind": "member", "group": "community", "color": "#99a4ad", "hoist": false },
-    { "name": "Wanderer", "kind": "onboarding", "group": "onboarding", "color": "#6b7280", "hoist": false, "autoAssign": true },
-    { "name": "Settler", "kind": "onboarding", "group": "onboarding", "color": "#d19b49", "hoist": false, "autoAssign": false }
+    {
+      "name": "━━ STAFF & LEADERSHIP ━━",
+      "kind": "separator",
+      "group": "staff",
+      "hoist": true,
+      "autoAssign": true
+    },
+    {
+      "name": "Founder",
+      "kind": "staff",
+      "group": "staff",
+      "hoist": true,
+      "permissions": [
+        "ViewChannel",
+        "SendMessages",
+        "ReadMessageHistory",
+        "ManageMessages",
+        "ManageThreads",
+        "EmbedLinks",
+        "AttachFiles",
+        "AddReactions",
+        "UseApplicationCommands"
+      ]
+    },
+    {
+      "name": "Project Lead",
+      "kind": "staff",
+      "group": "staff",
+      "hoist": true,
+      "permissions": [
+        "ViewChannel",
+        "SendMessages",
+        "ReadMessageHistory",
+        "ManageMessages",
+        "ManageThreads",
+        "EmbedLinks",
+        "AttachFiles",
+        "AddReactions",
+        "UseApplicationCommands"
+      ]
+    },
+    {
+      "name": "Moderator",
+      "kind": "staff",
+      "group": "staff",
+      "hoist": true,
+      "permissions": [
+        "ViewChannel",
+        "SendMessages",
+        "ReadMessageHistory",
+        "ManageMessages",
+        "ManageThreads",
+        "EmbedLinks",
+        "AddReactions",
+        "UseApplicationCommands"
+      ]
+    },
+    {
+      "name": "━━ CONTRIBUTOR PATHS ━━",
+      "kind": "separator",
+      "group": "contributors",
+      "hoist": true,
+      "autoAssign": true
+    },
+    {
+      "name": "Builder",
+      "kind": "self-selectable",
+      "group": "contributors",
+      "selfAssignable": true,
+      "reactionEmoji": "🧱",
+      "hoist": false
+    },
+    {
+      "name": "Lore Writer",
+      "kind": "self-selectable",
+      "group": "contributors",
+      "selfAssignable": true,
+      "reactionEmoji": "📜",
+      "hoist": false
+    },
+    {
+      "name": "Artist",
+      "kind": "self-selectable",
+      "group": "contributors",
+      "selfAssignable": true,
+      "reactionEmoji": "🎨",
+      "hoist": false
+    },
+    {
+      "name": "World Designer",
+      "kind": "self-selectable",
+      "group": "contributors",
+      "selfAssignable": true,
+      "reactionEmoji": "🗺️",
+      "hoist": false
+    },
+    {
+      "name": "Server Tester",
+      "kind": "self-selectable",
+      "group": "contributors",
+      "selfAssignable": true,
+      "reactionEmoji": "🧪",
+      "hoist": false
+    },
+    {
+      "name": "Community Helper",
+      "kind": "self-selectable",
+      "group": "contributors",
+      "selfAssignable": true,
+      "reactionEmoji": "🤝",
+      "hoist": false
+    },
+    {
+      "name": "━━ COMMUNITY ━━",
+      "kind": "separator",
+      "group": "community",
+      "hoist": true,
+      "autoAssign": true
+    },
+    {
+      "name": "Member",
+      "kind": "member",
+      "group": "community",
+      "hoist": false
+    },
+    {
+      "name": "Wanderer",
+      "kind": "onboarding",
+      "group": "onboarding",
+      "hoist": false,
+      "autoAssign": true
+    },
+    {
+      "name": "Settler",
+      "kind": "onboarding",
+      "group": "onboarding",
+      "hoist": false,
+      "autoAssign": false
+    }
   ],
   "roleMenuChannelName": "🎭・choose-your-roles",
   "onboarding": {
     "rulesChannelName": "📜・rules",
     "wandererRoleName": "Wanderer",
     "settlerRoleName": "Settler",
-    "acceptancePhrases": ["I accept", "I agree", "accept the rules", "agree to the rules"]
+    "acceptancePhrases": [
+      "I accept",
+      "I agree",
+      "accept the rules",
+      "agree to the rules"
+    ]
   },
   "categories": [
     {
       "name": "Owners",
       "private": true,
-      "staffRoleNames": ["Founder", "Project Lead"],
+      "staffRoleNames": [
+        "Founder",
+        "Project Lead"
+      ],
       "channels": [
-        { "name": "🔐・owners-checklist", "type": "text", "topic": "Private project decisions and owner checklist.", "legacyNames": ["owners-checklist"] },
-        { "name": "💬・chat", "type": "text", "topic": "Private owner discussion.", "legacyNames": ["chat"] }
+        {
+          "name": "🔐・owners-checklist",
+          "type": "text",
+          "topic": "Private project decisions and owner checklist.",
+          "legacyNames": [
+            "owners-checklist"
+          ]
+        },
+        {
+          "name": "💬・chat",
+          "type": "text",
+          "topic": "Private owner discussion.",
+          "legacyNames": [
+            "chat"
+          ]
+        }
       ]
     },
     {
       "name": "Staff Chambers",
       "private": true,
-      "staffRoleNames": ["Founder", "Project Lead", "Moderator"],
+      "staffRoleNames": [
+        "Founder",
+        "Project Lead",
+        "Moderator"
+      ],
       "channels": [
-        { "name": "👑・crown-chamber", "type": "text", "topic": "Leadership coordination.", "legacyNames": ["crown-chamber"] },
-        { "name": "🌿・council-of-roots", "type": "text", "topic": "Project planning and decisions.", "legacyNames": ["council-of-roots"] },
-        { "name": "📋・project-planning", "type": "text", "topic": "Tasks, priorities, and project notes.", "legacyNames": ["project-planning"] },
-        { "name": "🧱・build-team", "type": "text", "topic": "Coordinate Minecraft world builds.", "legacyNames": ["build-team"] },
-        { "name": "📜・lore-team", "type": "text", "topic": "Discuss and review lore against the canon register.", "legacyNames": ["lore-team"] },
-        { "name": "🛡️・moderation", "type": "text", "topic": "Private moderation coordination.", "legacyNames": ["moderation"] },
-        { "name": "📝・applications-review", "type": "text", "topic": "Review contributor applications.", "legacyNames": ["applications-review"] }
+        {
+          "name": "👑・crown-chamber",
+          "type": "text",
+          "topic": "Leadership coordination.",
+          "legacyNames": [
+            "crown-chamber"
+          ]
+        },
+        {
+          "name": "🌿・council-of-roots",
+          "type": "text",
+          "topic": "Project planning and decisions.",
+          "legacyNames": [
+            "council-of-roots"
+          ]
+        },
+        {
+          "name": "📋・project-planning",
+          "type": "text",
+          "topic": "Tasks, priorities, and project notes.",
+          "legacyNames": [
+            "project-planning"
+          ]
+        },
+        {
+          "name": "🧱・build-team",
+          "type": "text",
+          "topic": "Coordinate Minecraft world builds.",
+          "legacyNames": [
+            "build-team"
+          ]
+        },
+        {
+          "name": "📜・lore-team",
+          "type": "text",
+          "topic": "Discuss and review lore against the canon register.",
+          "legacyNames": [
+            "lore-team"
+          ]
+        },
+        {
+          "name": "🛡️・moderation",
+          "type": "text",
+          "topic": "Private moderation coordination.",
+          "legacyNames": [
+            "moderation"
+          ]
+        },
+        {
+          "name": "📝・applications-review",
+          "type": "text",
+          "topic": "Review contributor applications.",
+          "legacyNames": [
+            "applications-review"
+          ]
+        }
       ]
     },
     {
       "name": "The Gateway",
       "private": false,
       "channels": [
-        { "name": "👋・welcome", "type": "text", "topic": "Welcome. Learn what Aeloria is and how to contribute.", "starterMessage": "Welcome to Aeloria, wanderer. Read 📜・rules, then introduce yourself and choose the contribution paths that interest you.", "legacyNames": ["welcome"] },
-        { "name": "🧭・begin-your-journey", "type": "text", "topic": "Start here: roles, introductions, lore, and contribution paths.", "legacyNames": ["begin-your-journey"] },
-        { "name": "📜・rules", "type": "text", "topic": "Community rules and project expectations.", "starterMessage": "**Aeloria rules**\n\n1. Respect people and their work.\n2. Keep proposals distinct from approved canon.\n3. No harassment, raids, spam, or unsafe automation.\n4. Use the right channel and give ideas enough context to be useful.\n\nReply here with `I accept the rules` to move from **Wanderer** to **Settler** and open the community paths.", "legacyNames": ["rules"] },
-        { "name": "📣・announcements", "type": "text", "topic": "Project news and important updates.", "legacyNames": ["announcements"] },
-        { "name": "❓・faq", "type": "text", "topic": "Frequently asked questions about the project.", "legacyNames": ["faq"] },
-        { "name": "🗺️・server-road-map", "type": "text", "topic": "The plan for building and opening the Minecraft server.", "legacyNames": ["server-road-map"] },
-        { "name": "🎖️・roles-n-ranks", "type": "text", "topic": "What project and community roles mean.", "legacyNames": ["roles-n-ranks"] },
-        { "name": "🎭・choose-your-roles", "type": "text", "topic": "Choose contribution interests; staff roles are assigned by the team.", "starterMessage": "**Choose your contribution paths**\n\nUse the buttons or reactions below to add or remove Builder, Lore Writer, Artist, World Designer, Server Tester, and Community Helper. These are interest roles, not permission grants.", "legacyNames": ["choose-your-roles"] }
+        {
+          "name": "👋・welcome",
+          "type": "text",
+          "topic": "Welcome. Learn what Aeloria is and how to contribute.",
+          "starterMessage": "Welcome to Aeloria, wanderer. Read 📜・rules, then introduce yourself and choose the contribution paths that interest you.",
+          "legacyNames": [
+            "welcome"
+          ]
+        },
+        {
+          "name": "🧭・begin-your-journey",
+          "type": "text",
+          "topic": "Start here: roles, introductions, lore, and contribution paths.",
+          "legacyNames": [
+            "begin-your-journey"
+          ]
+        },
+        {
+          "name": "📜・rules",
+          "type": "text",
+          "topic": "Community rules and project expectations.",
+          "starterMessage": "**Aeloria rules**\n\n1. Respect people and their work.\n2. Keep proposals distinct from approved canon.\n3. No harassment, raids, spam, or unsafe automation.\n4. Use the right channel and give ideas enough context to be useful.\n\nReply here with `I accept the rules` to move from **Wanderer** to **Settler** and open the community paths.",
+          "legacyNames": [
+            "rules"
+          ]
+        },
+        {
+          "name": "📣・announcements",
+          "type": "text",
+          "topic": "Project news and important updates.",
+          "legacyNames": [
+            "announcements"
+          ]
+        },
+        {
+          "name": "❓・faq",
+          "type": "text",
+          "topic": "Frequently asked questions about the project.",
+          "legacyNames": [
+            "faq"
+          ]
+        },
+        {
+          "name": "🗺️・server-road-map",
+          "type": "text",
+          "topic": "The plan for building and opening the Minecraft server.",
+          "legacyNames": [
+            "server-road-map"
+          ]
+        },
+        {
+          "name": "🎖️・roles-n-ranks",
+          "type": "text",
+          "topic": "What project and community roles mean.",
+          "legacyNames": [
+            "roles-n-ranks"
+          ]
+        },
+        {
+          "name": "🎭・choose-your-roles",
+          "type": "text",
+          "topic": "Choose contribution interests; staff roles are assigned by the team.",
+          "starterMessage": "**Choose your contribution paths**\n\nUse the buttons or reactions below to add or remove Builder, Lore Writer, Artist, World Designer, Server Tester, and Community Helper. These are interest roles, not permission grants.",
+          "legacyNames": [
+            "choose-your-roles"
+          ]
+        }
       ]
     },
     {
       "name": "The Chronicles",
       "private": false,
       "channels": [
-        { "name": "🌎・what-is-aeloria", "type": "text", "topic": "The world, the Isle, and the story so far.", "legacyNames": ["what-is-aeloria"] },
-        { "name": "🤝・the-promise", "type": "text", "topic": "The Promise is remembered. Its words are not preserved.", "legacyNames": ["the-promise"] },
-        { "name": "⌛・timeline-of-aeloria", "type": "text", "topic": "A working chronology. Conflicts are flagged, not silently resolved.", "legacyNames": ["timeline-of-aeloria"] },
-        { "name": "🗺️・territory-map", "type": "text", "topic": "Current territory map and build references.", "legacyNames": ["territory-map"] },
-        { "name": "📚・lore-library", "type": "text", "topic": "Approved lore, drafts, and source references.", "legacyNames": ["lore-library"] }
+        {
+          "name": "🌎・what-is-aeloria",
+          "type": "text",
+          "topic": "The world, the Isle, and the story so far.",
+          "legacyNames": [
+            "what-is-aeloria"
+          ]
+        },
+        {
+          "name": "🤝・the-promise",
+          "type": "text",
+          "topic": "The Promise is remembered. Its words are not preserved.",
+          "legacyNames": [
+            "the-promise"
+          ]
+        },
+        {
+          "name": "⌛・timeline-of-aeloria",
+          "type": "text",
+          "topic": "A working chronology. Conflicts are flagged, not silently resolved.",
+          "legacyNames": [
+            "timeline-of-aeloria"
+          ]
+        },
+        {
+          "name": "🗺️・territory-map",
+          "type": "text",
+          "topic": "Current territory map and build references.",
+          "legacyNames": [
+            "territory-map"
+          ]
+        },
+        {
+          "name": "📚・lore-library",
+          "type": "text",
+          "topic": "Approved lore, drafts, and source references.",
+          "legacyNames": [
+            "lore-library"
+          ]
+        }
       ]
     },
     {
       "name": "The Commons",
       "private": false,
       "channels": [
-        { "name": "👋・introductions", "type": "text", "topic": "Tell us what you enjoy and how you might like to help.", "legacyNames": ["introductions"] },
-        { "name": "💬・general-chat", "type": "text", "topic": "Community conversation.", "legacyNames": ["general-chat"] },
-        { "name": "🎨・creations", "type": "text", "topic": "Share creative work related to the project.", "legacyNames": ["creations"] },
-        { "name": "📸・screenshots", "type": "text", "topic": "Share Minecraft builds and world references.", "legacyNames": ["screenshots"] },
-        { "name": "🍺・tavern-banter", "type": "text", "topic": "Casual conversation, in the spirit of the setting.", "legacyNames": ["tavern-banter"] },
-        { "name": "🧙・ask-a-warden", "type": "text", "topic": "Questions about Aeloria or how to contribute.", "legacyNames": ["ask-a-warden"] }
+        {
+          "name": "👋・introductions",
+          "type": "text",
+          "topic": "Tell us what you enjoy and how you might like to help.",
+          "legacyNames": [
+            "introductions"
+          ]
+        },
+        {
+          "name": "💬・general-chat",
+          "type": "text",
+          "topic": "Community conversation.",
+          "legacyNames": [
+            "general-chat"
+          ]
+        },
+        {
+          "name": "🎨・creations",
+          "type": "text",
+          "topic": "Share creative work related to the project.",
+          "legacyNames": [
+            "creations"
+          ]
+        },
+        {
+          "name": "📸・screenshots",
+          "type": "text",
+          "topic": "Share Minecraft builds and world references.",
+          "legacyNames": [
+            "screenshots"
+          ]
+        },
+        {
+          "name": "🍺・tavern-banter",
+          "type": "text",
+          "topic": "Casual conversation, in the spirit of the setting.",
+          "legacyNames": [
+            "tavern-banter"
+          ]
+        },
+        {
+          "name": "🧙・ask-a-warden",
+          "type": "text",
+          "topic": "Questions about Aeloria or how to contribute.",
+          "legacyNames": [
+            "ask-a-warden"
+          ]
+        }
       ]
     },
     {
       "name": "The Guilds",
       "private": false,
       "channels": [
-        { "name": "🧱・builders-hall", "type": "text", "topic": "Build tasks, references, and feedback.", "legacyNames": ["builders-hall"] },
-        { "name": "✒️・scribes-archive", "type": "text", "topic": "Writing, lore drafts, and canon references.", "legacyNames": ["scribes-archive"] },
-        { "name": "🎨・artisan-guild", "type": "text", "topic": "Art, design, and visual direction.", "legacyNames": ["artisan-guild"] },
-        { "name": "💡・ideas-and-suggestions", "type": "text", "topic": "Suggestions with context and a clear project connection.", "legacyNames": ["ideas-and-suggestions"] }
+        {
+          "name": "🧱・builders-hall",
+          "type": "text",
+          "topic": "Build tasks, references, and feedback.",
+          "legacyNames": [
+            "builders-hall"
+          ]
+        },
+        {
+          "name": "✒️・scribes-archive",
+          "type": "text",
+          "topic": "Writing, lore drafts, and canon references.",
+          "legacyNames": [
+            "scribes-archive"
+          ]
+        },
+        {
+          "name": "🎨・artisan-guild",
+          "type": "text",
+          "topic": "Art, design, and visual direction.",
+          "legacyNames": [
+            "artisan-guild"
+          ]
+        },
+        {
+          "name": "💡・ideas-and-suggestions",
+          "type": "text",
+          "topic": "Suggestions with context and a clear project connection.",
+          "legacyNames": [
+            "ideas-and-suggestions"
+          ]
+        }
       ]
     },
     {
       "name": "The Mysteries",
       "private": false,
       "channels": [
-        { "name": "🔮・theories", "type": "text", "topic": "Theories are welcome; distinguish evidence from speculation.", "legacyNames": ["theories"] },
-        { "name": "🌱・beneath-the-roots", "type": "text", "topic": "Deeproot, the Silent Chamber, and what the records do not say.", "legacyNames": ["beneath-the-roots"] },
-        { "name": "🏮・the-lantern-child", "type": "text", "topic": "Collect clues about the child with the lantern.", "legacyNames": ["the-lantern-child"] },
-        { "name": "🧩・forgotten-fragments", "type": "text", "topic": "Unsorted fragments and questions, not established canon.", "legacyNames": ["forgotten-fragments"] }
+        {
+          "name": "🔮・theories",
+          "type": "text",
+          "topic": "Theories are welcome; distinguish evidence from speculation.",
+          "legacyNames": [
+            "theories"
+          ]
+        },
+        {
+          "name": "🌱・beneath-the-roots",
+          "type": "text",
+          "topic": "Deeproot, the Silent Chamber, and what the records do not say.",
+          "legacyNames": [
+            "beneath-the-roots"
+          ]
+        },
+        {
+          "name": "🏮・the-lantern-child",
+          "type": "text",
+          "topic": "Collect clues about the child with the lantern.",
+          "legacyNames": [
+            "the-lantern-child"
+          ]
+        },
+        {
+          "name": "🧩・forgotten-fragments",
+          "type": "text",
+          "topic": "Unsorted fragments and questions, not established canon.",
+          "legacyNames": [
+            "forgotten-fragments"
+          ]
+        }
       ]
     },
     {
       "name": "Voice Channels",
       "private": false,
       "channels": [
-        { "name": "🍺・The Tavern", "type": "voice", "description": "A relaxed voice room for community conversation.", "legacyNames": ["The Tavern"] },
-        { "name": "🧱・Builder Workshop", "type": "voice", "description": "Voice coordination for builders working on The Forgotten Ring.", "legacyNames": ["Builder Workshop"] },
-        { "name": "✒️・Scribe's Study", "type": "voice", "description": "Voice discussion for lore, writing, and canon review.", "legacyNames": ["Scribe's Study"] },
-        { "name": "🎨・Artisan Corner", "type": "voice", "description": "Voice discussion for art, design, and visual direction.", "legacyNames": ["Artisan Corner"] },
-        { "name": "💤・AFK", "type": "voice", "description": "A place to wait when you are away from keyboard.", "legacyNames": ["AFK"] }
+        {
+          "name": "🍺・The Tavern",
+          "type": "voice",
+          "description": "A relaxed voice room for community conversation.",
+          "legacyNames": [
+            "The Tavern"
+          ]
+        },
+        {
+          "name": "🧱・Builder Workshop",
+          "type": "voice",
+          "description": "Voice coordination for builders working on The Forgotten Ring.",
+          "legacyNames": [
+            "Builder Workshop"
+          ]
+        },
+        {
+          "name": "✒️・Scribe's Study",
+          "type": "voice",
+          "description": "Voice discussion for lore, writing, and canon review.",
+          "legacyNames": [
+            "Scribe's Study"
+          ]
+        },
+        {
+          "name": "🎨・Artisan Corner",
+          "type": "voice",
+          "description": "Voice discussion for art, design, and visual direction.",
+          "legacyNames": [
+            "Artisan Corner"
+          ]
+        },
+        {
+          "name": "💤・AFK",
+          "type": "voice",
+          "description": "A place to wait when you are away from keyboard.",
+          "legacyNames": [
+            "AFK"
+          ]
+        }
       ]
     }
   ]

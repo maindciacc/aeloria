@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFileSync } from "node:fs";
 import { separatorRoles, selfAssignableRoles, validateRoleManifest } from "../src/role-policy.js";
 
 test("role manifest separates safe self-selectable roles from staff roles", () => {
@@ -11,6 +12,11 @@ test("role manifest separates safe self-selectable roles from staff roles", () =
   assert.deepEqual(validateRoleManifest(roles), []);
   assert.equal(separatorRoles(roles).length, 1);
   assert.equal(selfAssignableRoles(roles).length, 1);
+});
+
+test("rollout manifest leaves role colors for discussion", () => {
+  const manifest = JSON.parse(readFileSync(new URL("../config/aeloria-server.json", import.meta.url), "utf8")) as { roles: Array<{ name: string; color?: string }> };
+  assert.equal(manifest.roles.some((role) => role.color !== undefined), false);
 });
 
 test("administrator is rejected while bounded staff permissions are accepted", () => {

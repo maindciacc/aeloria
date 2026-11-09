@@ -49,6 +49,7 @@ export function rolePreviewLines(guild: Guild, manifest: RoleManifest): string[]
   lines.push(`Self-selectable roles: ${selfAssignableRoles(manifest.roles).length}`);
   lines.push(`Auto-assigned separator roles: ${separatorRoles(manifest.roles).length}`);
   lines.push(`Role menu channel: ${manifest.roleMenuChannelName ?? "not configured"}`);
+  lines.push("Role colors: intentionally unset; discuss and choose a palette before applying colors.");
   return lines;
 }
 
@@ -58,14 +59,14 @@ export async function applyRoleManifest(guild: Guild, manifest: RoleManifest): P
     const existing = findRole(guild, spec);
     if (existing) {
       if (!existing.managed) {
-        await existing.edit({ color: (spec.color ?? "#99a4ad") as ColorResolvable, hoist: spec.hoist ?? false, permissions: (spec.permissions ?? []) as PermissionResolvable[], reason: "Aeloria role manifest: reconcile role" });
+        await existing.edit({ ...(spec.color ? { color: spec.color as ColorResolvable } : {}), hoist: spec.hoist ?? false, permissions: (spec.permissions ?? []) as PermissionResolvable[], reason: "Aeloria role manifest: reconcile role" });
       }
       results.push(`✓ role ready: ${spec.name}`);
       continue;
     }
     const role = await guild.roles.create({
       name: spec.name,
-      color: (spec.color ?? "#99a4ad") as ColorResolvable,
+      ...(spec.color ? { color: spec.color as ColorResolvable } : {}),
       hoist: spec.hoist ?? false,
       mentionable: false,
       permissions: (spec.permissions ?? []) as PermissionResolvable[],

@@ -970,20 +970,15 @@ async function applyManifest(guild: Guild, reconcileExisting = false): Promise<s
     const existingRole = sameRole(guild.roles.cache.values(), spec);
     if (existingRole) {
       if (reconcileExisting && !existingRole.managed) {
-        const color = spec.color ?? "#99a4ad";
-        if (!/^#[0-9a-f]{6}$/i.test(color)) throw new Error(`Invalid hex color for role ${spec.name}: ${color}`);
-        await existingRole.edit({ color: color as ColorResolvable, hoist: spec.hoist ?? false, reason: "Aeloria setup manifest: reconcile role" });
+        await existingRole.edit({ ...(spec.color ? { color: spec.color as ColorResolvable } : {}), hoist: spec.hoist ?? false, reason: "Aeloria setup manifest: reconcile role" });
         results.push(`Reconciled existing role: ${spec.name}`);
       } else {
         results.push(`Skipped existing role: ${spec.name}`);
       }
       continue;
     }
-    const color = spec.color ?? "#99a4ad";
-    if (!/^#[0-9a-f]{6}$/i.test(color)) throw new Error(`Invalid hex color for role ${spec.name}: ${color}`);
     const role = await guild.roles.create({
       name: spec.name,
-      color: color as ColorResolvable,
       hoist: spec.hoist ?? false,
       mentionable: false,
       permissions: [],
