@@ -11,6 +11,7 @@ test("conversation intent recognizes common operational language", () => {
 
 test("conversation intent recognizes staged rollout controls", () => {
   assert.deepEqual(conversationIntent("rollout plan"), { kind: "rollout-plan" });
+  assert.deepEqual(conversationIntent("roll out plan"), { kind: "rollout-plan" });
   assert.deepEqual(conversationIntent("rollout tweak welcome off"), { kind: "rollout-tweak", request: "rollout tweak welcome off" });
   assert.deepEqual(conversationIntent("approve rollout"), { kind: "rollout-approve" });
   assert.deepEqual(conversationIntent("run next rollout stage"), { kind: "rollout-next" });

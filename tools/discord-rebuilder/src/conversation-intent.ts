@@ -17,11 +17,12 @@ export type ConversationIntent =
 export function conversationIntent(input: string): ConversationIntent {
   const text = input.trim();
   const normalized = text.toLocaleLowerCase();
-  if (/\brollout\b.*\b(cancel|stop|abort)\b/.test(normalized)) return { kind: "rollout-cancel" };
-  if (/\b(approve|confirm)\b.*\brollout\b|\brollout\b.*\b(approve|confirm)\b/.test(normalized)) return { kind: "rollout-approve" };
-  if (/\b(run|execute|do)\b.*\b(next|stage)\b.*\brollout\b|\brollout\b.*\b(run next|next stage)\b/.test(normalized)) return { kind: "rollout-next" };
-  if (/\brollout\b.*\b(tweak|change|adjust|skip|enable|disable)\b/.test(normalized)) return { kind: "rollout-tweak", request: text };
-  if (/\brollout\b.*\b(plan|status|stages?)\b/.test(normalized)) return { kind: "rollout-plan" };
+  const rolloutWord = /\broll(?:out|\s+out)\b/;
+  if (rolloutWord.test(normalized) && /\b(cancel|stop|abort)\b/.test(normalized)) return { kind: "rollout-cancel" };
+  if (/\b(approve|confirm)\b/.test(normalized) && rolloutWord.test(normalized)) return { kind: "rollout-approve" };
+  if ((/\b(run|execute|do)\b.*\b(next|stage)\b/.test(normalized) && rolloutWord.test(normalized)) || (rolloutWord.test(normalized) && /\b(run next|next stage)\b/.test(normalized))) return { kind: "rollout-next" };
+  if (rolloutWord.test(normalized) && /\b(tweak|change|adjust|skip|enable|disable)\b/.test(normalized)) return { kind: "rollout-tweak", request: text };
+  if (rolloutWord.test(normalized) && /\b(plan|status|stages?)\b/.test(normalized)) return { kind: "rollout-plan" };
   if (/\b(lock|lockdown|freeze|close)\b/.test(normalized) && !/\b(status|what|is)\b/.test(normalized)) return { kind: "lockdown-request", enabled: true };
   if (/\b(unlock|open|lift|release)\b.*\b(lockdown|server|gates)\b/.test(normalized)) return { kind: "lockdown-request", enabled: false };
   if (/\blockdown\b.*\b(status|active|enabled|disabled)\b|\bstatus\b.*\blockdown\b/.test(normalized)) return { kind: "lockdown-status" };
