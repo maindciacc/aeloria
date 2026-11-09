@@ -14,10 +14,12 @@ The Root Chronicles are the memory-archive of Aeloria. They are written in many 
 
 ## Core books
 
-### 1. The Last Days Before the Promise I
-### 2. The Last Days Before the Promise II
-### 3. The Last Days Before the Promise III
-### 4. The Last Days Before the Promise IV
+The original source is preserved in [`root-chronicles-draft.txt`](root-chronicles-draft.txt). Generated, bot-readable book files are in [`books/README.md`](books/README.md), and retrieval hooks are collected in [`root-chronicles-factoids.md`](root-chronicles-factoids.md). All derived material remains draft/reference until explicitly reviewed.
+
+### 1. [The Last Days Before the Promise I](books/book-01-the-last-days-before-the-promise-i.md)
+### 2. [The Last Days Before the Promise II](books/book-02-the-last-days-before-the-promise-ii.md)
+### 3. [The Last Days Before the Promise III](books/book-03-the-last-days-before-the-promise-iii.md)
+### 4. [The Last Days Before the Promise IV](books/book-04-the-last-days-before-the-promise-iv.md)
 ### 5. Refugees of Arcane Grove
 ### 6. The Fall of the First Sanctuary
 ### 7. Dreams Across the World

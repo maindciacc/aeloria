@@ -177,6 +177,8 @@ export async function loadProjectContext(config: LocalConfig): Promise<string> {
   const paths = [
     join(config.repositoryRoot, "docs", "canon", "canon-register.md"),
     join(config.repositoryRoot, "docs", "lore", "root-chronicles-index.md"),
+    join(config.repositoryRoot, "docs", "lore", "root-chronicles-factoids.md"),
+    ...(await markdownFiles(join(config.repositoryRoot, "docs", "lore", "books"))),
     join(config.repositoryRoot, "docs", "world", "territory-map.md"),
     join(config.repositoryRoot, "docs", "server", "onboarding-flow.md"),
     ...(await markdownFiles(join(config.workspacePath, "lore"))),

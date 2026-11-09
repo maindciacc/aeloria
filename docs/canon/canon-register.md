@@ -45,7 +45,10 @@
 
 ## Draft material in active use
 
-- Root Chronicles books 1-20, as written in the draft file
+- Root Chronicles source draft: `docs/lore/root-chronicles-draft.txt`
+- Root Chronicles books 1-20: generated reference files under `docs/lore/books/`
+- Root Chronicles factoids and hooks: `docs/lore/root-chronicles-factoids.md`
+- All Root Chronicles material above is **Draft / Reference**, pending explicit review; generation does not promote it to approved canon.
 - The territory map and labels from the provided world map references
 - The Discord server structure and welcome onboarding content from the screenshots
 
