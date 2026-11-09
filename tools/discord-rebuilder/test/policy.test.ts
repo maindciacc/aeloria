@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { canManage, chatAllowed, isAuthorizedOperator, parseIdSet, removeBotMention, wakeQuestion } from "../src/policy.js";
+import { canManage, chatAllowed, containsExactName, isAuthorizedOperator, parseIdSet, removeBotMention, wakeQuestion } from "../src/policy.js";
 
 test("parseIdSet trims values and ignores empty entries", () => {
   assert.deepEqual(parseIdSet(" 123, ,456,123 "), new Set(["123", "456"]));
@@ -37,4 +37,10 @@ test("wake phrase parsing rejects empty prompts", () => {
 test("bot mentions are removed without changing other text", () => {
   assert.equal(removeBotMention("<@123> what is Aeloria?", "123"), "what is Aeloria?");
   assert.equal(removeBotMention("<@!123> help <@123>", "123"), "help");
+});
+
+test("resource names require exact boundaries", () => {
+  assert.equal(containsExactName("delete #old-channel", "old-channel"), true);
+  assert.equal(containsExactName("delete old-channel-backup", "old-channel"), false);
+  assert.equal(containsExactName("delete the Archive category", "Archive"), true);
 });

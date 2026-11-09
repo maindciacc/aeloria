@@ -1,0 +1,9 @@
+# Copy to config.yml after creating a named Cloudflare tunnel.
+# Keep config.yml and the tunnel credentials file out of Git.
+tunnel: REPLACE_WITH_TUNNEL_UUID
+credentials-file: C:\\Users\\YOUR_USER\\.cloudflared\\REPLACE_WITH_TUNNEL_UUID.json
+
+ingress:
+  - hostname: warden.example.com
+    service: http://127.0.0.1:3180
+  - service: http_status:404

@@ -35,7 +35,7 @@ The project is built around a forgotten world, a drifting island, and a Promise 
 
 ## Discord setup assistant
 
-The bot in `tools/discord-rebuilder/` is deliberately conservative. It previews a manifest and can create missing roles, categories, and channels in one configured guild. It does **not** delete, rename, or change existing resources. Review its manifest before running it against the live server.
+The bot in `tools/discord-rebuilder/` is deliberately conservative. It previews a manifest and can create missing roles, categories, and channels in one configured guild. It also has separately guarded reconciliation, content, role, lore, and owner-confirmed reset workflows. Review its manifest and exact preview output before running it against the live server.
 
 See [`tools/discord-rebuilder/README.md`](tools/discord-rebuilder/README.md) for setup.
 

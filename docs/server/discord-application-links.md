@@ -2,8 +2,8 @@
 
 After the GitHub Pages workflow has deployed the `docs` folder, use these public HTTPS URLs in the Discord Developer Portal:
 
-- Terms of Service: `https://maindciacc.github.io/aeloria/legal/terms-of-service.html`
-- Privacy Policy: `https://maindciacc.github.io/aeloria/legal/privacy-policy.html`
+- Terms of Service: `https://maindiaccc.github.io/aeloria/legal/terms-of-service.html`
+- Privacy Policy: `https://maindiaccc.github.io/aeloria/legal/privacy-policy.html`
 
 In **Repository Settings → Pages**, select **GitHub Actions** if it is not already enabled. Confirm each URL opens in a private browser window without a GitHub login before entering it into Discord. If the repository owner uses a different GitHub Pages hostname, use the deployed workflow URL shown by GitHub instead.
 

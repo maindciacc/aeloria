@@ -36,3 +36,10 @@ export function removeBotMention(content: string, botId: string): string {
   const mention = new RegExp(`<@!?${botId}>`, "g");
   return content.replace(mention, "").trim();
 }
+
+export function containsExactName(request: string, name: string): boolean {
+  const normalizedName = name.trim().toLocaleLowerCase();
+  if (!normalizedName) return false;
+  const escaped = normalizedName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`(^|[^\\p{L}\\p{N}_-])${escaped}(?=$|[^\\p{L}\\p{N}_-])`, "iu").test(request);
+}

@@ -1,4 +1,4 @@
-export type RoleKind = "separator" | "staff" | "self-selectable" | "member";
+export type RoleKind = "separator" | "staff" | "self-selectable" | "member" | "onboarding";
 
 export type RoleSpec = {
   name: string;
@@ -34,7 +34,7 @@ export function validateRoleManifest(roles: readonly RoleSpec[]): string[] {
       if (role.selfAssignable) errors.push(`Separator role cannot be self-assignable: ${role.name}`);
       if (role.group) groups.add(role.group);
     }
-    if (role.autoAssign && role.kind !== "separator" && role.kind !== "member") {
+    if (role.autoAssign && role.kind !== "separator" && role.kind !== "member" && role.kind !== "onboarding") {
       errors.push(`Only separator/member roles may auto-assign: ${role.name}`);
     }
     if (role.selfAssignable && role.kind !== "self-selectable") {

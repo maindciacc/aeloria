@@ -12,9 +12,17 @@
     { "name": "Server Tester", "kind": "self-selectable", "group": "contributors", "selfAssignable": true, "reactionEmoji": "🧪", "color": "#d19b49", "hoist": false },
     { "name": "Community Helper", "kind": "self-selectable", "group": "contributors", "selfAssignable": true, "reactionEmoji": "🤝", "color": "#5caa8c", "hoist": false },
     { "name": "━━ COMMUNITY ━━", "kind": "separator", "group": "community", "color": "#5865f2", "hoist": true, "autoAssign": true },
-    { "name": "Member", "kind": "member", "group": "community", "color": "#99a4ad", "hoist": false }
+    { "name": "Member", "kind": "member", "group": "community", "color": "#99a4ad", "hoist": false },
+    { "name": "Wanderer", "kind": "onboarding", "group": "onboarding", "color": "#6b7280", "hoist": false, "autoAssign": true },
+    { "name": "Settler", "kind": "onboarding", "group": "onboarding", "color": "#d19b49", "hoist": false, "autoAssign": false }
   ],
   "roleMenuChannelName": "🎭・choose-your-roles",
+  "onboarding": {
+    "rulesChannelName": "📜・rules",
+    "wandererRoleName": "Wanderer",
+    "settlerRoleName": "Settler",
+    "acceptancePhrases": ["I accept", "I agree", "accept the rules", "agree to the rules"]
+  },
   "categories": [
     {
       "name": "Owners",
@@ -43,14 +51,14 @@
       "name": "The Gateway",
       "private": false,
       "channels": [
-        { "name": "👋・welcome", "type": "text", "topic": "Welcome. Learn what Aeloria is and how to contribute.", "legacyNames": ["welcome"] },
+        { "name": "👋・welcome", "type": "text", "topic": "Welcome. Learn what Aeloria is and how to contribute.", "starterMessage": "Welcome to Aeloria, wanderer. Read 📜・rules, then introduce yourself and choose the contribution paths that interest you.", "legacyNames": ["welcome"] },
         { "name": "🧭・begin-your-journey", "type": "text", "topic": "Start here: roles, introductions, lore, and contribution paths.", "legacyNames": ["begin-your-journey"] },
-        { "name": "📜・rules", "type": "text", "topic": "Community rules and project expectations.", "legacyNames": ["rules"] },
+        { "name": "📜・rules", "type": "text", "topic": "Community rules and project expectations.", "starterMessage": "**Aeloria rules**\n\n1. Respect people and their work.\n2. Keep proposals distinct from approved canon.\n3. No harassment, raids, spam, or unsafe automation.\n4. Use the right channel and give ideas enough context to be useful.\n\nReply here with `I accept the rules` to move from **Wanderer** to **Settler** and open the community paths.", "legacyNames": ["rules"] },
         { "name": "📣・announcements", "type": "text", "topic": "Project news and important updates.", "legacyNames": ["announcements"] },
         { "name": "❓・faq", "type": "text", "topic": "Frequently asked questions about the project.", "legacyNames": ["faq"] },
         { "name": "🗺️・server-road-map", "type": "text", "topic": "The plan for building and opening the Minecraft server.", "legacyNames": ["server-road-map"] },
         { "name": "🎖️・roles-n-ranks", "type": "text", "topic": "What project and community roles mean.", "legacyNames": ["roles-n-ranks"] },
-        { "name": "🎭・choose-your-roles", "type": "text", "topic": "Choose contribution interests; staff roles are assigned by the team.", "legacyNames": ["choose-your-roles"] }
+        { "name": "🎭・choose-your-roles", "type": "text", "topic": "Choose contribution interests; staff roles are assigned by the team.", "starterMessage": "**Choose your contribution paths**\n\nUse the buttons or reactions below to add or remove Builder, Lore Writer, Artist, World Designer, Server Tester, and Community Helper. These are interest roles, not permission grants.", "legacyNames": ["choose-your-roles"] }
       ]
     },
     {

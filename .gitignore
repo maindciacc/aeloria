@@ -1,2 +1,3 @@
 .vs/
 tools/discord-rebuilder/.env
+.warden-workspace/

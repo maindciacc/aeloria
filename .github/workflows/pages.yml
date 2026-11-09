@@ -16,7 +16,38 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  validate-warden:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tools/discord-rebuilder
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Reject secret and generated artifacts
+        working-directory: .
+        shell: bash
+        run: |
+          if git ls-files | while IFS= read -r file; do [ -e "$file" ] && printf '%s\n' "$file"; done | grep -E '(^|/)(\.env|aeloria\.zip|node_modules)(/|$)'; then
+            echo "Tracked secret or generated artifact detected."
+            exit 1
+          fi
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: tools/discord-rebuilder/package-lock.json
+      - name: Install Warden dependencies
+        run: npm ci
+      - name: Typecheck Warden
+        run: npm run typecheck
+      - name: Test Warden
+        run: npm test
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
   deploy:
+    needs: validate-warden
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

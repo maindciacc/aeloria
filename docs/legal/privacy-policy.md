@@ -17,8 +17,12 @@ The bot uses Discord data only to:
 - authorize configured operators and owners;
 - add or remove explicitly self-selectable roles;
 - maintain the configured server structure;
+- post managed starter messages and update configured channel topics when an operator explicitly runs content apply;
+- assign configured separator roles when that opt-in feature is enabled;
 - answer explicitly requested project questions;
-- compare selected channel posts with repository guidance when an operator runs an audit.
+- compare selected channel posts with repository guidance when an operator runs an audit;
+- perform owner-confirmed deletion of exact manifest-managed resources when the reset or conversational deletion feature is explicitly used;
+- write owner-approved lore proposals to the local repository canon workflow.
 
 ## Local processing
 
@@ -28,7 +32,7 @@ The bot does not silently train a model, sell personal information, or automatic
 
 ## Retention
 
-The bot does not intentionally persist ordinary command or message content as a remote service. Local logs, Ollama logs, Discord retention, and Obsidian notes are controlled by the operator's machine and configuration. Curated memory is written only through explicit local workflows.
+The bot does not intentionally persist ordinary command or message content as a remote service. Local logs, Ollama logs, Discord retention, repository lore drafts, and Obsidian notes are controlled by the operator's machine and configuration. Curated memory and lore changes are written only through explicit local workflows.
 
 Discord itself may retain data under Discord's policies.
 

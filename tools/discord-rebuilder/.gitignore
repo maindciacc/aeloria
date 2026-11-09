@@ -1,3 +1,7 @@
 node_modules/
 dist/
 .env
+.warden-workspace/
+ops/cloudflared/config.yml
+ops/cloudflared/*.json
+ops/cloudflared/cert.pem
