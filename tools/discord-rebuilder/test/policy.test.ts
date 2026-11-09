@@ -7,6 +7,13 @@ test("parseIdSet trims values and ignores empty entries", () => {
   assert.deepEqual(parseIdSet(undefined), new Set());
 });
 
+test("both configured owners bypass Discord Manage Server requirements", () => {
+  const owners = new Set(["b0uns3", "saltybean"]);
+  assert.equal(canManage("b0uns3", new Set(), false, owners, false), true);
+  assert.equal(canManage("saltybean", new Set(), false, owners, false), true);
+  assert.equal(canManage("staff", new Set(["staff"]), false, owners, false), false);
+});
+
 test("operator management requires both allowlisting and Manage Server", () => {
   const operators = new Set(["operator"]);
   assert.equal(isAuthorizedOperator("operator", operators, true), true);
@@ -14,11 +21,11 @@ test("operator management requires both allowlisting and Manage Server", () => {
   assert.equal(isAuthorizedOperator("other", operators, true), false);
 });
 
-test("God Mode does not grant management access", () => {
+test("configured owners always have application management access", () => {
   const operators = new Set<string>();
   const owners = new Set(["owner", "co-owner"]);
-  assert.equal(canManage("owner", operators, false, owners, false), false);
-  assert.equal(canManage("co-owner", operators, false, owners, true), true);
+  assert.equal(canManage("owner", operators, false, owners, false), true);
+  assert.equal(canManage("co-owner", operators, false, owners, false), true);
   assert.equal(canManage("other", operators, true, owners, true), false);
 });
 

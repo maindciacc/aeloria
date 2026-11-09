@@ -19,7 +19,7 @@ export function canManage(
   ownerIds: ReadonlySet<string>,
   adminMode: boolean,
 ): boolean {
-  return isAuthorizedOperator(userId, operatorIds, hasManageGuild) || (adminMode && ownerIds.has(userId));
+  return ownerIds.has(userId) || isAuthorizedOperator(userId, operatorIds, hasManageGuild);
 }
 
 export function chatAllowed(channelId: string, allowedChannelIds: ReadonlySet<string>): boolean {
