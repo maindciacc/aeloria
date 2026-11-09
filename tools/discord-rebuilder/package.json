@@ -1,0 +1,21 @@
+{
+  "name": "aeloria-discord-rebuilder",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A conservative, self-hosted Discord setup assistant for the Aeloria project.",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test test/*.test.ts"
+  },
+  "dependencies": {
+    "discord.js": "^14.19.3",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
+  }
+}
